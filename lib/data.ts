@@ -45,21 +45,23 @@ export async function getProductById(id: string): Promise<SerializedProduct | nu
   }
 }
 
-export async function getUserDetails(username: string) {
+export async function getUserDetails() {
   try {
     const session = await getServerSession(authOptions);
-    const id=session?.user.id;
-
-    if (!session || !session.user.username) {
+    if (!session || !session.user?.id) {
       return null;
     }
     
     await connectToDatabase();
-    const user = await User.findById(id);
-    user.password = undefined;
+    const user = await User.findById(session.user.id).lean();
+
+    if (!user) return null;
+    user.password = undefined; 
+    
     return user;
+
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch product data.");
+    throw new Error("Failed to fetch user details.");
   }
 }

@@ -1,10 +1,13 @@
-// app/profile/page.jsx (or wherever your page is)
+export const dynamic = 'force-dynamic';
+
 import { getUserDetails } from '@/lib/data'
 import React from 'react'
 import ProfileActions from '../components/ProfileActions';
 
+
 const page = async () => {
-  const userData = await getUserDetails("amritop");
+
+  const userData = await getUserDetails();
 
   if (!userData) {
     return <div className="p-10 text-center">User not found</div>
@@ -20,7 +23,7 @@ const page = async () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
         
-        <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+        <div className="h-32 bg-linear-to-r from-blue-500 to-purple-600"></div>
 
         <div className="px-6 pb-8">
           {/* Avatar Image - Centered and overlapping the header */}
