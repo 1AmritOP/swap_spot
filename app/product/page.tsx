@@ -4,8 +4,21 @@ import ProductCard from "../components/ProductCard";
 import { ArrowRight } from "lucide-react";
 import Loader from "../components/Loader";
 
+
+export interface Product {
+  price: number;
+  img: string;
+  name: string;
+  details: string;
+  contactDetail: number | string;
+  sellerUsername: string;
+  location: string;
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 const page = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const getProduct = async () => {
       const res = await fetch("/api/product");
@@ -34,7 +47,7 @@ const page = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {products.map((product) => (
-              <ProductCard key={product.id!} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         </div>

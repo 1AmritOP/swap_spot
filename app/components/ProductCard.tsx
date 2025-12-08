@@ -1,8 +1,9 @@
 
 import Link from "next/link";
 import React from "react";
+import { Product } from "../product/page";
 
-const ProductCard = ({ product }: { product: any }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div>
       {/* --- FRESH RECOMMENDATIONS --- */}
