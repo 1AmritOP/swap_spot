@@ -34,7 +34,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       {/* --- FRESH RECOMMENDATIONS --- */}
       {/* Note: Updated href to match your folder structure if needed */}
       <Link
-        href={`/product/${product._id}`} 
+        href={`/product/product-detail/${product._id}`} 
         className="block mb-4"
       >
         <div className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-white">

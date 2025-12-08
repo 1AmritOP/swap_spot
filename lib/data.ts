@@ -2,6 +2,9 @@
 import { connectToDatabase } from "@/lib/db";
 import Product from "@/models/Product";
 import mongoose from "mongoose";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth";
+import User from "@/models/User";
 
 export interface SerializedProduct {
   _id: string;
@@ -18,18 +21,13 @@ export interface SerializedProduct {
 export async function getProductById(id: string): Promise<SerializedProduct | null> {
   try {
     await connectToDatabase();
-
-    // 1. Validate the ID format to prevent app crashes
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return null;
     }
 
-    // 2. Fetch data directly (bypassing the API network call for speed)
     const product = await Product.findById(id).lean();
 
     if (!product) return null;
-
-    // 3. Serialize: Convert Mongoose ObjectIds and Dates to strings
     return {
       _id: product._id.toString(),
       name: product.name,
@@ -41,6 +39,25 @@ export async function getProductById(id: string): Promise<SerializedProduct | nu
       location: product.location,
       createdAt: product.createdAt?.toISOString() || new Date().toISOString(),
     };
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch product data.");
+  }
+}
+
+export async function getUserDetails(username: string) {
+  try {
+    const session = await getServerSession(authOptions);
+    const id=session?.user.id;
+
+    if (!session || !session.user.username) {
+      return null;
+    }
+    
+    await connectToDatabase();
+    const user = await User.findById(id);
+    user.password = undefined;
+    return user;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch product data.");
