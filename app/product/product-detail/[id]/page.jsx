@@ -1,101 +1,97 @@
-import React from 'react'
-import { getProductDetail } from "@/lib/library"
-import Link from 'next/link';
+// app/product/[id]/page.js (No types)
+import React from "react";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getProductById } from "@/lib/data";
 
-const page = async ({ params }) => {
-  // Await params as required in Next.js 15+
+export default async function ProductDetailsPage({ params }) {
+  // Await params (Next.js 15)
   const { id } = await params;
-  const details = await getProductDetail(id);
 
-  // Handle case where product is not found
-  if (!details) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl font-bold text-gray-500">Product not found</h1>
-      </div>
-    );
+  const product = await getProductById(id);
+
+  if (!product) {
+    return notFound();
   }
 
-  // Format the date to be readable
-  const formattedDate = new Date(details.createdAt).toLocaleDateString('en-IN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        
-        <div className="md:flex">
-          {/* Left Side: Product Image */}
-          <div className="md:w-1/2 relative h-64 md:h-auto bg-gray-200">
-            {/* Using standard img tag. If your img string is a full URL, this works. 
-                If using Next/Image, you need to configure domains. */}
-            <img 
-              src={details.img || "https://via.placeholder.com/400"} 
-              alt={details.name} 
-              className="w-full h-full object-cover"
+    <div className="min-h-screen bg-white py-10 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Navigation */}
+        <nav className="mb-8">
+          <Link
+            href="/product"
+            className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
+          >
+            &larr; Back to Marketplace
+          </Link>
+        </nav>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          {/* Left: Product Image */}
+          <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 flex items-center justify-center min-h-[400px]">
+            <img
+              src={product.img}
+              alt={product.name}
+              className="w-full h-full object-cover max-h-[600px]"
             />
           </div>
 
-          {/* Right Side: Product Details */}
-          <div className="p-8 md:w-1/2 flex flex-col justify-between">
+          {/* Right: Product Info */}
+          <div className="flex flex-col gap-6">
             <div>
               <div className="flex justify-between items-start">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2 capitalize">
-                    {details.name}
-                    </h1>
-                    <p className="text-sm text-gray-500 flex items-center gap-1">
-                    📍 {details.location}
-                    </p>
-                </div>
-                <div className="text-right">
-                    <span className="text-xs text-gray-500 block">Price</span>
-                    <span className="text-2xl font-bold text-green-600">
-                    ₹{details.price}
-                    </span>
-                </div>
+                <h1 className="text-3xl font-bold text-gray-900">
+                  {product.name}
+                </h1>
+                <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide">
+                  {product.location}
+                </span>
               </div>
-
-              <div className="mt-6">
-                <h3 className="text-sm font-medium text-gray-900 uppercase tracking-wide">
-                  Description
-                </h3>
-                <p className="mt-2 text-gray-600 leading-relaxed">
-                  {details.details}
-                </p>
-              </div>
-
-              {/* Seller Metadata */}
-              <div className="mt-6 border-t pt-4">
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <p>
-                    Seller: <span className="font-medium text-gray-900">{details.sellerUsername}</span>
-                  </p>
-                  <p>Posted: {formattedDate}</p>
-                </div>
-              </div>
+              <p className="text-sm text-gray-400 mt-2">
+                Posted on {new Date(product.createdAt).toLocaleDateString()}
+              </p>
             </div>
 
-            {/* Action Button */}
-            <div className="mt-8">
-              <a 
-                href={`tel:${details.contactDetail}`}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
-              >
-                Call Seller: {details.contactDetail}
-              </a>
-              <p className="mt-2 text-xs text-center text-gray-400">
-                Product ID: {details._id}
+            <div className="text-4xl font-extrabold text-gray-900">
+              <span>₹</span>  {product.price.toLocaleString()}
+            </div>
+
+            <div className="prose prose-sm text-gray-600">
+              <h3 className="text-gray-900 font-semibold mb-2">Details</h3>
+              <p className="whitespace-pre-line leading-relaxed">
+                {product.details}
               </p>
+            </div>
+
+            {/* Seller Info Card */}
+            <div className="mt-6 border-t border-gray-100 pt-6">
+              <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-4">
+                Seller Contact
+              </h3>
+              <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg">
+                  {product.sellerUsername.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900">
+                    @{product.sellerUsername}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    +91 {product.contactDetail}
+                  </p>
+                </div>
+                <a
+                  href={`tel:${product.contactDetail}`}
+                  className="px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Call Now
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default page
