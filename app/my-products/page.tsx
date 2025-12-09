@@ -67,7 +67,7 @@ const UserProductsPage = () => {
     }).format(price);
   };
 
-  const formatDate = (dateString: Date) => {
+  const formatDate = (dateString: string | Date) => {
     return new Date(dateString).toLocaleDateString("en-IN", {
       year: "numeric",
       month: "short",

@@ -14,8 +14,8 @@ export interface IProduct {
   sellerUsername: string;
   location: string;
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 const page = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
