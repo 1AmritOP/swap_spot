@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Product } from "../product/page"; // Ensure your Product interface has 'createdAt'
+import { IProduct } from "../product/page"; // Ensure your Product interface has 'createdAt'
 
 // Helper function to format the date
 const getRelativeTime = (dateString?: string | Date) => {
@@ -28,7 +28,7 @@ const getRelativeTime = (dateString?: string | Date) => {
   }
 };
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product }: { product: IProduct }) => {
   return (
     <div>
       {/* --- FRESH RECOMMENDATIONS --- */}

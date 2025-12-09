@@ -67,7 +67,7 @@ const UserProductsPage = () => {
     }).format(price);
   };
 
-  const formatDate = (dateString: string | Date) => {
+  const formatDate = (dateString: Date | string) => {
     return new Date(dateString).toLocaleDateString("en-IN", {
       year: "numeric",
       month: "short",
@@ -126,7 +126,7 @@ const UserProductsPage = () => {
                 <div className="border-t pt-3 mt-2 space-y-2">
                   <div className="flex justify-between text-xs text-gray-500">
                     <span>Contact: {product.contactDetail}</span>
-                    <span>{formatDate(product.createdAt)}</span>
+                    <span>{formatDate(product.createdAt!)}</span>
                   </div>
 
                   <div className="flex gap-2 mt-3">
