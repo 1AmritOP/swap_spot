@@ -27,7 +27,6 @@ const getRelativeTime = (dateString?: string | Date) => {
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
   }
 };
-
 const ProductCard = ({ product }: { product: IProduct }) => {
   return (
     <div>

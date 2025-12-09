@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Loader from "../components/Loader";
 import { IProduct } from "../product/page";
+import Link from "next/link";
 
 const UserProductsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -130,11 +131,13 @@ const UserProductsPage = () => {
                   </div>
 
                   <div className="flex gap-2 mt-3">
+                    
                     <button
                       type="button"
                       className="flex-1 cursor-pointer bg-blue-600 text-white text-sm py-2 rounded-lg hover:bg-blue-700 transition"
                     >
-                      Edit
+                        <Link className="w-full h-full block" href={`/my-products/${product._id}`}>Edit</Link>
+
                     </button>
                     <button
                       type="button"

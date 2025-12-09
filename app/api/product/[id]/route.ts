@@ -33,7 +33,7 @@ export async function GET(
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
-    return NextResponse.json(product);
+    return NextResponse.json({ product }, { status: 200 });
   } catch (error) {
     console.log("Error during fetching Product detail : ", error);
     return NextResponse.json(
