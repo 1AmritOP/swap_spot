@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import Loader from "../components/Loader";
 
 
-export interface Product {
+export interface IProduct {
   price: number;
   img: string;
   name: string;
@@ -18,7 +18,7 @@ export interface Product {
   updatedAt: Date;
 }
 const page = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
   useEffect(() => {
     const getProduct = async () => {
       const res = await fetch("/api/product");
