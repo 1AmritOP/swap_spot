@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SwapSpot 🛍️
 
-## Getting Started
+**SwapSpot** is a modern, full-stack marketplace application designed to help users turn their clutter into cash. Built with Next.js 16, TypeScript, and MongoDB, it offers a seamless platform for buying and selling pre-owned goods locally.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* **User Authentication**: Secure Sign-up and Login using NextAuth.js (Credentials Provider).
+* **Product Listings**: Browse a grid of available products with real-time data.
+* **Sell Your Items**: Easy product creation flow with image uploading.
+* **Image Handling**: Fast and secure image uploads powered by ImageKit.io.
+* **Dashboard**: Manage your listings (Edit or Delete products).
+* **Product Details**: Detailed view for individual items with seller contact information.
+* **Responsive Design**: Mobile-first UI built with Tailwind CSS v4.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+* **Language**: [TypeScript](https://www.typescriptlang.org/)
+* **Database**: [MongoDB](https://www.mongodb.com/) (via [Mongoose](https://mongoosejs.com/))
+* **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+* **Authentication**: [NextAuth.js v4](https://next-auth.js.org/)
+* **Image Storage**: [ImageKit.io](https://imagekit.io/)
+* **Icons**: [Lucide React](https://lucide.dev/)
+* **Notifications**: [Sonner](https://sonner.emilkowal.ski/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+Follow these steps to get the project running on your local machine.
 
-To learn more about Next.js, take a look at the following resources:
+### Prerequisites
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Node.js (v18 or higher recommended)
+* MongoDB URI (Local or Atlas)
+* ImageKit.io Account
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Installation
 
-## Deploy on Vercel
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/swap-spot.git](https://github.com/your-username/swap-spot.git)
+    cd swap-spot
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3.  **Environment Variables:**
+    Create a `.env` file in the root directory and add the following variables based on the configuration found in `lib/db.ts`, `lib/auth.ts`, and `app/api/auth/imagekit-auth/route.ts`:
+
+    ```env
+    # Database
+    MONGODB_URI=your_mongodb_connection_string
+
+    # NextAuth
+    NEXTAUTH_URL=http://localhost:3000
+    NEXTAUTH_SECRET=your_super_secret_string
+
+    # ImageKit.io (For Image Uploads)
+    IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+    IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+    IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
+    ```
+
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+5.  **Open your browser:**
+    Visit [http://localhost:3000](http://localhost:3000) to see the application.
+
+## 📂 Project Structure
+
+```text
+swap_spot/
+├── app/
+│   ├── api/             # API Routes (Auth, Product CRUD, ImageKit)
+│   ├── components/      # Reusable UI components (Header, Loader, Cards)
+│   ├── login/           # Login Page
+│   ├── my-products/     # User specific listings (Edit/Delete)
+│   ├── product/         # Browse & Create Product pages
+│   ├── profile/         # User Profile Page
+│   └── register/        # Registration Page
+├── lib/                 # Utilities (DB Connection, Auth Config)
+├── models/              # Mongoose Models (User, Product)
+├── public/              # Static Assets
+└── ...config files

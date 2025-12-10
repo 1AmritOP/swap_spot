@@ -117,10 +117,11 @@ const EditProductPage = ( ) => {
               type="url"
               name="img"
               value={formData.img}
-              onChange={handleChange}
+              // onChange={handleChange}
               placeholder="https://example.com/image.jpg"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+              className="w-full px-4 py-3 cursor-not-allowed rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
               required
+              disabled
             />
             {/* Image Preview */}
             {formData.img && (
